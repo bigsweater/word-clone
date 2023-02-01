@@ -17,26 +17,35 @@ function Game() {
     const [guesses, setGuesses] = React.useState(
         range(0, NUM_OF_GUESSES_ALLOWED).map(() => ({ letters: '', id: Math.random() }))
     );
-    const [guessCount, setGuessCount] = React.useState(0);
+    const [guessIndex, setGuessIndex] = React.useState(0);
+    const [gameStatus, setGameStatus] = React.useState(0)
 
     function handleGuess(guess) {
-        if (guessCount === NUM_OF_GUESSES_ALLOWED) {
-            console.error('Max guesses reached!');
+        setGuessIndex(guessIndex + 1)
+
+        if (guessIndex <= NUM_OF_GUESSES_ALLOWED - 1) {
+            const nextGuesses = [...guesses]
+
+            nextGuesses.splice(guessIndex, 1, guess)
+
+            setGuesses(nextGuesses)
+        }
+
+        if (guessIndex === NUM_OF_GUESSES_ALLOWED - 1) {
+            setGameStatus(guess.letters === answer ? 1 : -1)
             return;
         }
 
-        const nextGuesses = [...guesses]
-
-        nextGuesses.splice(guessCount, 1, guess)
-
-        setGuesses(nextGuesses)
-        setGuessCount(guessCount + 1)
+        if (guess.letters === answer) {
+            setGameStatus(1);
+            return;
+        }
     }
 
     return (
         <>
             <GuessResults guesses={guesses} answer={answer} />
-            <GuessInput handleGuess={handleGuess} />
+            <GuessInput handleGuess={handleGuess} gameStatus={gameStatus} />
         </>
     );
 }
