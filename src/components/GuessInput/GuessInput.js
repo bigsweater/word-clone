@@ -11,7 +11,7 @@ function GuessInput({ handleGuess }) {
         }
 
         handleGuess({
-            letters: Array.from(guess),
+            letters: guess,
             id: Math.ceil(Math.random() * 100000)
         })
 

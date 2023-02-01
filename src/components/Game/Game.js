@@ -15,7 +15,7 @@ console.info({ answer });
 
 function Game() {
     const [guesses, setGuesses] = React.useState(
-        range(0, NUM_OF_GUESSES_ALLOWED).map(() => ({ letters: ['', '', '', '', ''], id: Math.random() }))
+        range(0, NUM_OF_GUESSES_ALLOWED).map(() => ({ letters: '', id: Math.random() }))
     );
     const [guessCount, setGuessCount] = React.useState(0);
 
@@ -35,7 +35,7 @@ function Game() {
 
     return (
         <>
-            <GuessResults guesses={guesses} />
+            <GuessResults guesses={guesses} answer={answer} />
             <GuessInput handleGuess={handleGuess} />
         </>
     );
