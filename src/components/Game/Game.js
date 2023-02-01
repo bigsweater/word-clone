@@ -3,6 +3,7 @@ import React from 'react';
 import { sample, range } from '../../utils';
 import { WORDS } from '../../data';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import { checkGuess } from '../../game-helpers'
 
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults'
@@ -34,11 +35,11 @@ function Game() {
         setGuessIndex(guessIndex + 1)
 
         if (guessIndex <= NUM_OF_GUESSES_ALLOWED - 1) {
-            const nextGuesses = [...guesses]
+            const nextGuessResults = [...guessResults]
 
-            nextGuesses.splice(guessIndex, 1, guess)
+            nextGuessResults.splice(guessIndex, 1, checkGuess(guess.letters, answer));
 
-            setGuesses(nextGuesses)
+            setGuessResults(nextGuessResults)
         }
 
         if (guessIndex === NUM_OF_GUESSES_ALLOWED - 1) {
@@ -63,10 +64,9 @@ function Game() {
 
     return (
         <>
-            <GuessResults guesses={guesses} answer={answer} />
+            <GuessResults guessResults={guessResults} />
             <GuessInput handleGuess={handleGuess} gameStatus={gameStatus} />
-            <VirtualKeyboard />
-            <Banner gameStatus={gameStatus} guessIndex={guessIndex} answer={answer} />
+            <VirtualKeyboard guessResults={guessResults} />
             <Banner gameStatus={gameStatus} guessIndex={guessIndex} answer={answer} handleReset={handleReset} />
         </>
     );
