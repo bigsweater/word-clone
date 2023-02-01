@@ -7,7 +7,7 @@ function Banner({ gameStatus, guessIndex, answer }) {
                 <div className="happy banner">
                     <p>
                         <strong>Congratulations!</strong> Got it in{' '}
-                        <strong>{guessIndex} guesses</strong>.
+                        <strong>{guessIndex} {guessIndex > 1 ? 'guesses' : 'guess'}</strong>.
                     </p>
                 </div>
             )}
