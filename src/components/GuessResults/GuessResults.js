@@ -1,7 +1,7 @@
 import React from "react";
 import Guess from '../Guess'
 
-function Guesses({ guesses }) {
+function GuessResults({ guesses }) {
     return (
         <div className="guess-results">
             {guesses.map(guess => (
@@ -11,4 +11,4 @@ function Guesses({ guesses }) {
     );
 }
 
-export default Guesses;
+export default GuessResults;

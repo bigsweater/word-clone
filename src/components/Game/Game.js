@@ -5,7 +5,7 @@ import { WORDS } from '../../data';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
 import GuessInput from '../GuessInput';
-import Guesses from '../Guesses'
+import GuessResults from '../GuessResults'
 
 
 // Pick a random word on every pageload.
@@ -35,7 +35,7 @@ function Game() {
 
     return (
         <>
-            <Guesses guesses={guesses} />
+            <GuessResults guesses={guesses} />
             <GuessInput handleGuess={handleGuess} />
         </>
     );
