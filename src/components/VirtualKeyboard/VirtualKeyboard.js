@@ -2,12 +2,24 @@ import React from "react";
 
 import { KEYBOARD_LETTERS } from '../../data';
 
-function VirtualKeyboard() {
-    let initialLetters = {};
+function VirtualKeyboard({ guessResults }) {
+    let letters = {};
     KEYBOARD_LETTERS.forEach(letter => {
-        initialLetters[letter] = { status: '' }
+        letters[letter] = { status: '' }
     });
-    const [letters, setLetters] = React.useState(initialLetters)
+    guessResults.forEach(result => {
+        result.forEach(letter => {
+            if (!letter.letter) {
+                return;
+            }
+
+            if (letters[letter.letter].status === 'correct') {
+                return;
+            }
+
+            letters[letter.letter] = { status: letter.status }
+        })
+    })
 
     return (
         <div className="virtual-keyboard">
