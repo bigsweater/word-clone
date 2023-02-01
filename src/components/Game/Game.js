@@ -10,17 +10,25 @@ import Banner from '../Banner'
 import VirtualKeyboard from '../VirtualKeyboard'
 
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
+function initialState() {
+    return {
+        answer: sample(WORDS),
+        guessIndex: 0,
+        gameStatus: 0,
+        guessResults: range(0, NUM_OF_GUESSES_ALLOWED)
+            .map(() => (
+                range(0, 5).map(_ => ({ letter: '', status: '' }))
+            ))
+    }
+}
 
 function Game() {
-    const [guesses, setGuesses] = React.useState(
-        range(0, NUM_OF_GUESSES_ALLOWED).map(() => ({ letters: '', id: Math.random() }))
-    );
-    const [guessIndex, setGuessIndex] = React.useState(0);
-    const [gameStatus, setGameStatus] = React.useState(0)
+    const state = initialState();
+    const [answer, setAnswer] = React.useState(state.answer)
+    console.info({answer: answer})
+    const [guessIndex, setGuessIndex] = React.useState(state.guessIndex);
+    const [gameStatus, setGameStatus] = React.useState(state.gameStatus)
+    const [guessResults, setGuessResults] = React.useState(state.guessResults);
 
     function handleGuess(guess) {
         setGuessIndex(guessIndex + 1)
@@ -44,12 +52,22 @@ function Game() {
         }
     }
 
+    function handleReset() {
+        const state = initialState();
+        console.info({answer: state.answer})
+        setAnswer(state.answer)
+        setGuessIndex(state.guessIndex);
+        setGameStatus(state.gameStatus);
+        setGuessResults(state.guessResults)
+    }
+
     return (
         <>
             <GuessResults guesses={guesses} answer={answer} />
             <GuessInput handleGuess={handleGuess} gameStatus={gameStatus} />
             <VirtualKeyboard />
             <Banner gameStatus={gameStatus} guessIndex={guessIndex} answer={answer} />
+            <Banner gameStatus={gameStatus} guessIndex={guessIndex} answer={answer} handleReset={handleReset} />
         </>
     );
 }
