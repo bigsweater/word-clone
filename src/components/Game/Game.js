@@ -6,6 +6,7 @@ import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults'
+import Banner from '../Banner'
 
 
 // Pick a random word on every pageload.
@@ -46,6 +47,7 @@ function Game() {
         <>
             <GuessResults guesses={guesses} answer={answer} />
             <GuessInput handleGuess={handleGuess} gameStatus={gameStatus} />
+            <Banner gameStatus={gameStatus} guessIndex={guessIndex} answer={answer} />
         </>
     );
 }
